@@ -1,3 +1,5 @@
+
+
 /*HEADER*/
 
 main{
@@ -49,7 +51,9 @@ main{
 input:checked+p{
 	font-weight: 700;
 }
-
+.filterImg{
+	width: 10%;
+}
 
 
 
