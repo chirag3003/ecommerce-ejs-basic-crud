@@ -1,3 +1,15 @@
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost:27017/fruits', {useUnifiedTopology: true,useNewUrlParser: true});
+
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   console.log("connected")
+// });
+
+
+
+
 const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
@@ -15,7 +27,13 @@ app.get("/",function(req,res){
 	res.render("index",{prod:prod});
 })
 
-app.get("/admin/admin",function(req,res){
+
+app.get("/shop",function(req,res){
+	res.render("shop",{prod,prod})
+})
+
+
+app.get("/admin/product",function(req,res){
 	res.render("admin",{});
 })
 

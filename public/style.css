@@ -1,10 +1,20 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+main{
+	padding-top: 20px;
+}
+
+section{
+	padding: 20px 5%;
+}
 
 
 /*HEADER*/
 
-main{
-	margin: 20px 5%;
-}
+
 .header{
 	height:80vh;
 	width: 100%;
@@ -18,9 +28,9 @@ main{
 }
 
 .headdiv{
-	width: 70%;
+	width: 90%;
 	margin: auto;
-	padding-top:5%;
+	padding-top:10%;
 }
 .roboto{
 	font-size: 2em;
@@ -30,6 +40,7 @@ main{
 }
 .robotob{
 	font-size: 3em;
+	font-weight: 300;
 } 
 /* PRODUCTS */
 .card{
@@ -50,9 +61,6 @@ main{
 
 input:checked+p{
 	font-weight: 700;
-}
-.filterImg{
-	width: 10%;
 }
 
 
