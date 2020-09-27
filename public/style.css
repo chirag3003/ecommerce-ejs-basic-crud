@@ -48,6 +48,15 @@ section{
 	border-bottom-style: groove;
 }
 
+.product{
+	height:260px;
+
+}
+.prod-btn{
+	position: absolute;
+	bottom: 10px;
+}
+
 /*FILTERS*/
 
 .filter{
@@ -70,7 +79,6 @@ input:checked+p{
 	margin-top: 20px;
 
 }
-
 
 
 
