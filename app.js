@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
+mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority', {useUnifiedTopology: true,useNewUrlParser: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
