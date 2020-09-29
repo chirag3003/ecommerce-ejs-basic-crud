@@ -1,11 +1,11 @@
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost:27017/fruits', {useUnifiedTopology: true,useNewUrlParser: true});
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
 
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   console.log("connected")
-// });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("connected")
+});
 
 
 
@@ -20,16 +20,32 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.set("view engine" , "ejs");
 
-var prod = [];
 
+
+const productS = new mongoose.Schema({
+	title: String,
+	des: String,
+	price: Number,
+	orignalP: Number,
+});
+
+const Product = new mongoose.model("product", productS);
 
 app.get("/",function(req,res){
-	res.render("index",{prod:prod});
+	
+	Product.find(function(err,prod){
+		res.render("index" , {prod:prod})
+	})
+	
 })
 
 
 app.get("/shop",function(req,res){
-	res.render("shop",{prod,prod})
+	
+	Product.find(function(err,prod){
+		res.render("shop" , {prod:prod})
+		console.log(prod[1].oprice)
+	})
 })
 
 
@@ -39,11 +55,14 @@ app.get("/admin/product",function(req,res){
 
 app.post("/admin/product",function(req,res){
 	var data = req.body;
-	var product = {
+	var product = new Product({
 		title:data.title,
 		des:data.des,
-	}
-	prod.push(product);
+		prodPrice:data.prodPrice,
+		oprice:data.oprice,
+	})
+	product.save();
+
 	res.render("admin",{})
 
 })

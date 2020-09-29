@@ -49,9 +49,14 @@ section{
 }
 
 .product{
-	height:260px;
+	height:400px;
 
 }
+
+.product img{
+	height: 200px;
+}
+
 .prod-btn{
 	position: absolute;
 	bottom: 10px;
