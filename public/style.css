@@ -85,12 +85,11 @@ input:checked+p{
 
 }
 
+/*Product pages*/
 
 
-
-
-
-
-
+.product-carousel{
+	padding:5% 10%;
+}
 
 

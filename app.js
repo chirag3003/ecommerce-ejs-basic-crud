@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority', {useUnifiedTopology: true,useNewUrlParser: true});
+mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -39,18 +39,21 @@ app.get("/",function(req,res){
 	
 })
 
+app.get("/products",function(req,res){
+	res.render("product")
+})
+
 
 app.get("/shop",function(req,res){
 	
 	Product.find(function(err,prod){
-		res.render("shop" , {prod:prod})
-		console.log(prod[1].oprice)
+		res.render("shop" , {prod:prod});
 	})
 })
 
 
 app.get("/admin/product",function(req,res){
-	res.render("admin",{});
+	res.render("adminProduct",{});
 })
 
 app.post("/admin/product",function(req,res){
@@ -63,7 +66,7 @@ app.post("/admin/product",function(req,res){
 	})
 	product.save();
 
-	res.render("admin",{})
+	res.redirect("/admin/product")
 
 })
 
