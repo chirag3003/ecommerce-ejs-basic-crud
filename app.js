@@ -8,7 +8,14 @@ db.once('open', function() {
 });
 
 
+const productS = new mongoose.Schema({
+	productName: String,
+	productDesc: String,
+	productMrp: Number,
+	productPrice: Number,
+});
 
+const Product = new mongoose.model("productBasicInfo", productS);
 
 const express = require("express");
 const ejs = require("ejs");
@@ -22,14 +29,7 @@ app.set("view engine" , "ejs");
 
 
 
-const productS = new mongoose.Schema({
-	title: String,
-	des: String,
-	price: Number,
-	orignalP: Number,
-});
 
-const Product = new mongoose.model("product", productS);
 
 app.get("/",function(req,res){
 	
@@ -51,18 +51,31 @@ app.get("/shop",function(req,res){
 	})
 })
 
+app.get("/shop/:productId",function(req,res){
+	Product.findOne({_id:req.params.productId},function(err,prod){
+		if(err){
+			console.log("err");
+		}
+		else{
+			console.log(prod);
+			res.render("product",{prod:prod});
+		}
+	})
+})
+
 
 app.get("/admin/product",function(req,res){
 	res.render("adminProduct",{});
 })
 
 app.post("/admin/product",function(req,res){
+	
 	var data = req.body;
 	var product = new Product({
-		title:data.title,
-		des:data.des,
-		prodPrice:data.prodPrice,
-		oprice:data.oprice,
+		productName: data.productName,
+		productDesc: data.productDesc,
+		productMrp: data.productMrp,
+		productPrice: data.productPrice,
 	})
 	product.save();
 

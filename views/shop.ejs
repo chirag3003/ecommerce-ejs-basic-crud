@@ -56,13 +56,13 @@
 								<img src="images/images (1).jpeg" class="card-img-top" alt="...">
 							  
 								<div class="card-body">
-								    <h5 class="card-title"><%= prod.title%></h5>
-								    <p class="card-text"><%= prod.des %></p>
+								    <h5 class="card-title"><%= prod.productName%></h5>
+								    <p class="card-text"><%= prod.productDesc %></p>
 								    <div class="prodCardMrp">
-									    <p class="text-muted m-0 productMrp"> Product MRP: 12</p>
-									    <p class="m-0">SELLING PRICE: 10</p>
+									    <p class="text-muted m-0 productMrp"> Product MRP: <%= prod.productMrp %></p>
+									    <p class="m-0">SELLING PRICE:<%= prod.productPrice %></p>
 								    </div>
-								    <a href="#" class="btn prod-btn">Go somewhere</a>
+								    <a href="/shop/<%= prod._id %>" class="btn prod-btn">Go somewhere</a>
 								</div>
 							</div>
 						</div>
