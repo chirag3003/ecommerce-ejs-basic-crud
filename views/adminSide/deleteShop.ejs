@@ -53,16 +53,16 @@
 						<% prod.forEach(function(prod){ %>
 						<div class = "col-xl-4 col-md-6 col-sm-12 p-2 mb-2">
 							<div class="card  mx-auto product " style="width: 20rem;">
-								<img src="images/images (1).jpeg" class="card-img-top" alt="...">
+								<img src="/images/images (1).jpeg" class="card-img-top" alt="...">
 							  
 								<div class="card-body">
 								    <h5 class="card-title"><%= prod.productName%></h5>
-								    <p class="card-text"><%= prod.productDesc %></p>
+								    <p class="card-text"><%= prod.productQuantity %></p>
 								    <div class="prodCardMrp">
 									    <p class="text-muted m-0 productMrp"> Product MRP: <%= prod.productMrp %></p>
 									    <p class="m-0">SELLING PRICE:<%= prod.productPrice %></p>
 								    </div>
-								    <a href="/shop/<%= prod._id %>" class="btn prod-btn">Go somewhere</a>
+								    <a href="/admin/deleteproduct/<%= prod._id %>" class="btn prod-btn">Delete It</a>
 								</div>
 							</div>
 						</div>

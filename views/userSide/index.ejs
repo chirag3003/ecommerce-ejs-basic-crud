@@ -1,0 +1,78 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+
+
+	<!-- main content -->
+	<main>
+		<section id="header">
+			<div class="row">
+				<div class="col-xl-4">
+					<div class="header ">
+						<img src="images/gharanaMart.jpg">
+					</div>
+				</div>
+				<div class="col-xl-8">
+					
+					<div class="headdiv">
+						<header>
+							<h1 class="roboto robotob"> FREE 3 HOUR DILEVERY</h1>
+						</header>
+						<h7 class = " roboto">GET FAST DELIVERY AT YOUR DOORSTEP</h7>				
+					</div>
+					
+				</div>
+
+			</div>
+		</section>
+	
+
+		<!-- search bar -->
+		<section id="search">
+			<form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+		    </form>
+		</section>
+
+
+		<!-- PRODUCTS -->
+			<!-- filter -->
+			<section>
+			<div class="row ">
+					
+				<!-- products cards -->
+				<div class="col-12">
+					<div class = " row">
+						<% prod.forEach(function(prod){ %>
+						<div class = "col-xl-4 col-md-6 col-sm-12 p-2 mb-2">
+							<div class="card  mx-auto product" style="width: 18rem;">
+								<img src="images/images (1).jpeg" class="card-img-top" alt="...">
+							  
+							  	<div class="card-body">
+							    	<h5 class="card-title"><%= prod.productName%></h5>
+								    <p class="card-text"><%= prod.productQuantity%></p>
+								    <div class="prodCardMrp">
+									    <p class="text-muted m-0 productMrp"> Product MRP: <%= prod.productMrp %></p>
+									    <p class="m-0">SELLING PRICE:<%= prod.productPrice %></p>
+								    </div>
+							    	<a href="/shop/<%= prod._id %>" class="btn prod-btn">Go somewhere</a>
+							  	</div>
+							</div>
+						</div>
+						<% }) %>
+					</div>
+					
+				</div>
+			</div>
+		</section>
+	</main>
+
+
+
+
+
+
+
+
+<%- include("partials/footer") %>

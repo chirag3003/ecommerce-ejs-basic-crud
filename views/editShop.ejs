@@ -1,0 +1,76 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+
+	<main>
+
+
+		<!-- search bar -->
+		<section id="search">
+			<form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+		    </form>
+		</section>
+		<section>
+			<div class="row ">
+					<div class="col-md-4 col-sm-12">
+						<div class="filter">
+							<button class="btn btn-secondary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">
+								Filters
+							</button>
+							<div class="collapse" id="filters">
+								<div class="card card-body">
+									<form>
+										<input type="checkbox" name="check" class="check-fil">
+										<p class="check-fil">NOODLES</p>
+									</form>
+								</div>
+							</div>
+
+							<!-- <button class="btn bg-light btn-block text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">
+					          Filters
+					        </button>
+					        <div id="filters" class="collapse show" aria-labelledby="Filter" >
+						    	<div class="card-body">
+						    		<form>
+										<input type="checkbox" name="check" class="check-fil">
+										<p class="check-fil">NOODLES</p>
+									</form>
+						    	</div>
+						    </div> -->
+							<!-- <form>
+								<input type="checkbox" name="check" class="check-fil">
+								<p class="check-fil">NOODLES</p>
+							</form> -->
+						</div>
+						
+					</div>
+				</div>
+				<!-- products cards -->
+				<div class="col-12">
+					<div class = " row">
+						<% prod.forEach(function(prod){ %>
+						<div class = "col-xl-4 col-md-6 col-sm-12 p-2 mb-2">
+							<div class="card  mx-auto product " style="width: 20rem;">
+								<img src="/images/images (1).jpeg" class="card-img-top" alt="...">
+							  
+								<div class="card-body">
+								    <h5 class="card-title"><%= prod.productName%></h5>
+								    <p class="card-text"><%= prod.productQuantity %></p>
+								    <div class="prodCardMrp">
+									    <p class="text-muted m-0 productMrp"> Product MRP: <%= prod.productMrp %></p>
+									    <p class="m-0">SELLING PRICE:<%= prod.productPrice %></p>
+								    </div>
+								    <a href="/admin/editproduct/<%= prod._id %>" class="btn prod-btn">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+						<% }) %>
+					</div>
+					
+				</div>
+			</div>
+		</section>
+	</main>
+	<%- include("partials/footer") %>

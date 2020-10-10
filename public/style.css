@@ -41,7 +41,12 @@ section{
 .robotob{
 	font-size: 3em;
 	font-weight: 300;
-} 
+}
+
+
+
+
+
 /* PRODUCTS */
 .card{
 	border-style: none;
@@ -69,6 +74,11 @@ section{
 	color: white;
 }
 
+
+
+
+
+
 /*FILTERS*/
 
 .filter{
@@ -92,9 +102,32 @@ input:checked+p{
 
 }
 
+
+
+/*my cart*/
+.myCart{
+	background-color: #e8ffff;
+
+}
+.cartHeading p{
+	font-size: 1.2em;
+	font-weight: 500;
+}
+.cartprods{
+	max-height: 220px;
+}
+@media screen and (min-width: 480px) {
+  	.myCart{
+  		position: absolute;
+  		top: 0;
+  		right: 0;
+		height: 100vh;
+		width: 35vw;
+	}
+}
+
+
 /*Product pages*/
-
-
 .prodPagePadding{
 	padding:5% 15%;
 }
@@ -116,8 +149,6 @@ input:checked+p{
 .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%6c757d' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
-
-
 
 
 .carousel-control-prev{

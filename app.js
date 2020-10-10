@@ -8,9 +8,12 @@ db.once('open', function() {
 });
 
 
+let cart =[];
+
+
 const productS = new mongoose.Schema({
 	productName: String,
-	productDesc: String,
+	productQuantity: String,
 	productMrp: Number,
 	productPrice: Number,
 });
@@ -30,11 +33,11 @@ app.set("view engine" , "ejs");
 
 
 
-
+// user pages
 app.get("/",function(req,res){
 	
 	Product.find(function(err,prod){
-		res.render("index" , {prod:prod})
+		res.render("userSide/index" , {prod:prod})
 	})
 	
 })
@@ -47,7 +50,7 @@ app.get("/products",function(req,res){
 app.get("/shop",function(req,res){
 	
 	Product.find(function(err,prod){
-		res.render("shop" , {prod:prod});
+		res.render("userSide/shop" , {prod:prod});
 	})
 })
 
@@ -57,15 +60,20 @@ app.get("/shop/:productId",function(req,res){
 			console.log("err");
 		}
 		else{
-			console.log(prod);
-			res.render("product",{prod:prod});
+			res.render("userSide/product",{prod:prod});
 		}
 	})
 })
 
 
+
+
+
+
+// admin pages
+
 app.get("/admin/product",function(req,res){
-	res.render("adminProduct",{});
+	res.render("adminSide/adminProduct",{});
 })
 
 app.post("/admin/product",function(req,res){
@@ -73,7 +81,7 @@ app.post("/admin/product",function(req,res){
 	var data = req.body;
 	var product = new Product({
 		productName: data.productName,
-		productDesc: data.productDesc,
+		productQuantity: data.productQuantity,
 		productMrp: data.productMrp,
 		productPrice: data.productPrice,
 	})
@@ -83,7 +91,76 @@ app.post("/admin/product",function(req,res){
 
 })
 
+app.get("/admin/editproduct",function(req,res){
+	Product.find(function(err,prod){
+		res.render("adminSide/editShop" , {prod:prod});
+	})
+})
 
+app.get("/admin/editproduct/:productId",function(req,res){
+	Product.findOne({_id:req.params.productId},function(err,prod){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("adminSide/editProduct",{prod:prod})
+		}
+	})
+})
+
+app.post("/admin/editproduct",function(req,res){
+	let data = req.body;
+
+	Product.findByIdAndUpdate(data.productId,{$set:{
+		productName:data.productName,
+		productMrp: data.productMrp,
+		productPrice:data.productPrice,
+		productQuantity: data.productQuantity
+	}},function(err){
+		if(err){
+			console.log(err);
+		}
+	})
+})
+
+
+app.get("/admin/deleteproduct",function(req,res){
+	Product.find(function(err,prod){
+		res.render("adminSide/deleteShop" , {prod:prod});
+	})
+})
+
+app.get("/admin/deleteproduct/:productId",function(req,res){
+	Product.findOne({_id:req.params.productId},function(err,prod){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("adminSide/deleteProduct",{prod:prod})
+		}
+	})
+})
+
+app.post("/admin/deleteproduct",function(req,res){
+	let data = req.body;
+
+	Product.findByIdAndDelete(data.productId,function(err){
+		if(err)
+			console.log(err);
+
+	})
+	res.redirect("/admin/deleteproduct");
+})
+
+
+
+
+
+
+
+// user info and cart
+app.post("/addToCart",function(req,res){
+	cart.push(req.body.product);
+	console.log(cart);
+})
 
 
 

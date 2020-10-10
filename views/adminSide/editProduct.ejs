@@ -2,7 +2,7 @@
 <%- include("partials/nav") %>
 
 <main>
-	<form class="adminProductPageInfo" method="post" action="/admin/product">
+	<form class="adminProductPageInfo" method="post" action="/admin/editproduct">
 		<section>
 
 
@@ -39,24 +39,29 @@
 					<div class="prodPagePadding productInfo">
 
 						<span class="h1 ">
-							<textarea rows="1" class="admin-header-product" placeholder="Name of the Product" name="productName"></textarea>
+							<input ssssssssssss class="admin-header-product" placeholder="Name of the Product" name="productName"
+							value = "<%= prod.productName %>"></input>
 						</span>
+						<hr>
 
-						<p class="text-muted mt-4 productMrp"> <input placeholder="MRP:" name="productMrp"></p>
+						<p class="text-muted mt-4 productMrp m-0"> <input placeholder="MRP:" name="productMrp" value="<%= prod.productMrp %>"></p>
 	 
-						<p><input placeholder="SELLING PRICE:" name="productPrice" ></p>
+						<p><input placeholder="SELLING PRICE:" name="productPrice" value="<%= prod.productPrice %>"></p>
+						
 
-
+						<hr>
 
 
 						
 						<span class="description text-muted mb-2">
-							<textarea rows="9" cols="50" name="productDesc"></textarea>
+							<input type="text" class =  "text-muted" name="productQuantity" placeholder="enter the amount" value="<%= prod.productQuantity %>">
 						</span>
 
+						<br>
+						<br>
 
 
-						<button type="submit" class="btn btn-orange">Add To Cart</button>
+						<button type="submit" name="productId" class="btn btn-orange" value="<%= prod._id %>">Edit product</button>
 						
 					</div>
 

@@ -2,6 +2,7 @@
 <%- include("partials/nav") %>
 
 <main>
+	<form action="/admin/deleteproduct" method="post">
 	<section>
 
 
@@ -41,31 +42,37 @@
 						<%= prod.productName %>
 					</span>
 
-					<p class="text-muted mt-4 productMrp"> Product MRP:<%= prod.productMrp %></p>
+					<hr>
+
+					<p class="text-muted mt-4 productMrp m-0"> Product MRP:<%= prod.productMrp %></p>
  
 					<p>SELLING PRICE: <%= prod.productPrice %></p>
+					<hr>
+
+
+
+
+					<p>AVAILABLE IN:</p>
+					<!-- <span class="description text-muted mb-2">
+						<%= prod.productDesc %>
+					</span> -->
+
+					<button type="button" class="btn btn-outline-primary"><%= prod.productQuantity %></button>
+
 
 
 
 
 					
-					<span class="description text-muted mb-2">
-						<%= prod.productDesc %>
-					</span>
-
-
-
-
-
-					<form class="addToCart">
 						
-						<button class="btn btn-orange">Add To Cart</button>
-					</form>
+						<button type="submit" class="btn btn-orange" name="productId" href="/admin/deleteproduct/<%= prod._id %>" value="<%= prod._id %>">Delete Product</button>
+					
 				</div>
 
 			</div>
 		</div>
 	</section>
+	</form>
 </main>
 
 

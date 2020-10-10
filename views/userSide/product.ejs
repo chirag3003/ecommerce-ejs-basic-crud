@@ -1,0 +1,78 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+<main>
+	<section>
+
+
+		<div class="= row">
+			<div class="col-sm-12 col-md-5">
+				<!-- product images -->
+				<div id="productImages" class="carousel slide" data-ride="carousel">
+				  	<div class="carousel-inner prodPagePadding">
+				    	<div class="carousel-item active" data-interval="5000">
+				      		<img src="/images/images (1).jpeg" class="d-block w-100" alt="...">
+				    	</div>
+				    	<div class="carousel-item" data-interval="5000">
+				      		<img src="/images/gharanaMart.jpg" class="d-block w-100" alt="...">
+				    	</div>
+				    	<div class="carousel-item" data-interval="5000">
+				      		<img src="/images/images (1).jpeg" class="d-block w-100" alt="...">
+				    	</div>
+				  	</div>
+				  	<a class="carousel-control-prev" href="#productImages" role="button" data-slide="prev">
+				    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				  	  	<span class="sr-only">Previous</span>
+				  	</a>
+				  	<a class="carousel-control-next" href="#productImages" role="button" data-slide="next">
+				    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Next</span>
+				  	</a>
+				</div>
+
+				
+			</div>
+
+			<div class="col-sm-12 col-md-7" class= "">
+				
+				<div class="prodPagePadding productInfo">
+
+					<span class="h1 ">
+						<%= prod.productName %>
+					</span>
+
+					<hr>
+
+					<p class="text-muted mt-4 productMrp m-0"> Product MRP:<%= prod.productMrp %></p>
+ 
+					<p>SELLING PRICE: <%= prod.productPrice %></p>
+					<hr>
+
+
+
+
+					<p>AVAILABLE IN:</p>
+					<!-- <span class="description text-muted mb-2">
+						<%= prod.productDesc %>
+					</span> -->
+
+					<button type="button" class="btn btn-outline-primary"><%= prod.productQuantity %></button>
+
+
+
+
+
+					<form class="addToCart" method="post" action="/addToCart">
+						
+						<button type="submit" class="btn btn-orange" name="product" value="<%= prod._id %>">Add To Cart</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</main>
+
+
+
+<%- include("partials/footer") %>
