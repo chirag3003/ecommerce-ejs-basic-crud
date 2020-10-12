@@ -107,6 +107,7 @@ input:checked+p{
 /*my cart*/
 .myCart{
 	background-color: #e8ffff;
+	height: 100vh;
 
 }
 .cartHeading p{
@@ -116,13 +117,19 @@ input:checked+p{
 .cartprods{
 	max-height: 220px;
 }
+.cartProducts{
+	height: 60%;
+}
 @media screen and (min-width: 480px) {
   	.myCart{
   		position: absolute;
   		top: 0;
   		right: 0;
-		height: 100vh;
+		
 		width: 35vw;
+	}
+	.cartProducts{
+		height: 55%;
 	}
 }
 

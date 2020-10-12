@@ -1,3 +1,5 @@
+requre("dotenv").config();
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
 
@@ -8,8 +10,28 @@ db.once('open', function() {
 });
 
 
-let cart =[];
 
+const express = require("express");
+const ejs = require("ejs");
+const bodyParser = require("body-parser");
+const session = require("mongoose-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose")
+
+
+
+const app = express();
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.set("view engine" , "ejs");
+
+
+
+
+
+// mongoose configurations
+let cart =[];
 
 const productS = new mongoose.Schema({
 	productName: String,
@@ -17,18 +39,9 @@ const productS = new mongoose.Schema({
 	productMrp: Number,
 	productPrice: Number,
 });
-
 const Product = new mongoose.model("productBasicInfo", productS);
 
-const express = require("express");
-const ejs = require("ejs");
-const bodyParser = require("body-parser");
 
-const app = express();
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({extended:true}));
-
-app.set("view engine" , "ejs");
 
 
 
