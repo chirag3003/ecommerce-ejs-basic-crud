@@ -1,4 +1,4 @@
-requre("dotenv").config();
+require("dotenv").config();
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
