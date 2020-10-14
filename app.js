@@ -14,7 +14,7 @@ db.once('open', function() {
 const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
-const session = require("mongoose-session");
+// const session = require("mongoose-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose")
 
