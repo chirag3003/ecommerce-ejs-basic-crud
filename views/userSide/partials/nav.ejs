@@ -12,13 +12,20 @@
 
 	      <!-- log sign in -->
 
-
-	      <!-- <li class="nav-item">
-	        <a class="nav-link" href="#">LOG IN</a>
+	      <% if(!loggedIn){ %>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/login">LOG IN</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">SIGN UP</a>
-	      </li> -->
+	        <a class="nav-link" href="/register">SIGN UP</a>
+	      </li>
+	      <% } %>
+	      <% else{ %>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">My Account</a>
+	      </li>
+	      <%
+
 
 
 	      <!-- dropdown -->

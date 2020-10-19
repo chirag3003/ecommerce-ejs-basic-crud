@@ -1,23 +1,12 @@
 require("dotenv").config();
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://chirag:chirag30@cluster0.qvesn.gcp.mongodb.net/gharana', {useUnifiedTopology: true,useNewUrlParser: true});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("connected")
-});
-
-
-
 const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
-// const session = require("mongoose-session");
+const mongoose = require('mongoose');
+const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose")
-
 
 
 const app = express();
@@ -28,11 +17,29 @@ app.set("view engine" , "ejs");
 
 
 
+app.use(session({
+	secret:process.env.SECRET,
+	resave:false,
+	saveUnitialized:false,
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 // mongoose configurations
-let cart =[];
 
+mongoose.connect(`mongodb+srv://${process.env.MONGOKEY}@cluster0.qvesn.gcp.mongodb.net/gharana`, {useUnifiedTopology: true,useNewUrlParser: true});
+
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("connected")
+});
+
+//ProductSchema and model
 const productS = new mongoose.Schema({
 	productName: String,
 	productQuantity: String,
@@ -42,8 +49,23 @@ const productS = new mongoose.Schema({
 const Product = new mongoose.model("productBasicInfo", productS);
 
 
+//user credentials
+const userSchema = new mongoose.Schema({
+	username:String,
+	password:String,
+})
+
+userSchema.plugin(passportLocalMongoose);
+const user = new mongoose.model("user",userSchema);
 
 
+passport.use(user.createStrategy());
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser())
+
+
+
+let cart =[];
 
 
 // user pages
@@ -77,6 +99,66 @@ app.get("/shop/:productId",function(req,res){
 		}
 	})
 })
+
+app.get('/login',function(req,res){
+	res.render("userSide/login",{login:true})
+})
+app.get('/signup',function(req,res){
+	res.render("userSide/login",{login:false})
+})
+
+
+
+
+
+
+// user info and cart
+app.post("/addToCart",function(req,res){
+	cart.push(req.body.product);
+	console.log(cart);
+})
+
+app.post("/signup",function(req,res){
+	let data = req.body;
+	const userDetails = new user({
+		username: data.username,
+		password:data.password,
+	})
+	userDetails.save(function(err){
+		if(err){
+			console.log(err);
+		}
+		else
+			res.redirect("/login");
+
+	});
+	
+})
+
+app.post("/login",function(req,res){
+
+	let data= req.body;
+	user.findOne({username:data.username},function(err,user){
+		if(err)
+			console.log(err);
+		else{
+			if(user){
+				if(user.password == data.password)
+				res.redirect("/");
+				else
+					res.redirect("/login")
+
+			}else
+			res.redirect("/register");
+		}
+	})
+
+})
+
+
+
+
+
 
 
 
@@ -162,20 +244,6 @@ app.post("/admin/deleteproduct",function(req,res){
 	})
 	res.redirect("/admin/deleteproduct");
 })
-
-
-
-
-
-
-
-// user info and cart
-app.post("/addToCart",function(req,res){
-	cart.push(req.body.product);
-	console.log(cart);
-})
-
-
 
 
 app.listen(process.env.PORT || 3000,function(){
