@@ -108,6 +108,7 @@ input:checked+p{
 .myCart{
 	background-color: #e8ffff;
 	height: 100vh;
+	position: absolute;
 
 }
 .cartHeading p{

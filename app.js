@@ -30,7 +30,7 @@ app.use(passport.session());
 
 // mongoose configurations
 
-mongoose.connect(`mongodb+srv://${process.env.MONGOKEY}@cluster0.qvesn.gcp.mongodb.net/gharana`, {useUnifiedTopology: true,useNewUrlParser: true});
+mongoose.connect(`${process.env.MONGOKEY}`, {useUnifiedTopology: true,useNewUrlParser: true});
 
 
 const db = mongoose.connection;
@@ -54,10 +54,14 @@ const userSchema = new mongoose.Schema({
 	username:String,
 	password:String,
 })
-
 userSchema.plugin(passportLocalMongoose);
 const user = new mongoose.model("user",userSchema);
 
+const userINFO = new mongoose.Schema({
+	cart:[productS],
+	address:[String],
+
+})
 
 passport.use(user.createStrategy());
 passport.serializeUser(user.serializeUser());
@@ -68,34 +72,49 @@ passport.deserializeUser(user.deserializeUser())
 let cart =[];
 
 
+
 // user pages
 app.get("/",function(req,res){
+	if(req.isAuthenticated()){
+		console.log(req.user)
 	
+		Product.find(function(err,prod){
+			res.render("userSide/index" , {prod:prod,user:true})
+		})
+	}else
 	Product.find(function(err,prod){
-		res.render("userSide/index" , {prod:prod})
+		res.render("userSide/index" , {prod:prod,user:false})
 	})
 	
 })
 
-app.get("/products",function(req,res){
-	res.render("product")
-})
+
 
 
 app.get("/shop",function(req,res){
-	
+
+	let auser;
+	if(req.isAuthenticated())
+		auser = true;
+	else
+		auser = false;
 	Product.find(function(err,prod){
-		res.render("userSide/shop" , {prod:prod});
+		res.render("userSide/shop" , {prod:prod,user:auser});
 	})
 })
 
 app.get("/shop/:productId",function(req,res){
+	let auser;
+	if(req.isAuthenticated())
+		auser = true;
+	else
+		auser = false;
 	Product.findOne({_id:req.params.productId},function(err,prod){
 		if(err){
 			console.log("err");
 		}
 		else{
-			res.render("userSide/product",{prod:prod});
+			res.render("userSide/product",{prod:prod,user:auser});
 		}
 	})
 })
@@ -120,38 +139,60 @@ app.post("/addToCart",function(req,res){
 
 app.post("/signup",function(req,res){
 	let data = req.body;
-	const userDetails = new user({
-		username: data.username,
-		password:data.password,
-	})
-	userDetails.save(function(err){
+	user.register({username:data.username},data.password,function(err,user){
 		if(err){
 			console.log(err);
+			res.redirect("/signup");
 		}
-		else
-			res.redirect("/login");
-
-	});
+		else{
+			passport.authenticate("local")(req,res,function(){
+				res.redirect("/")
+			})
+		}
+	})
 	
 })
 
 app.post("/login",function(req,res){
 
 	let data= req.body;
-	user.findOne({username:data.username},function(err,user){
-		if(err)
+	user.findOne({username:date.username},function(err,user){
+		if(err){
 			console.log(err);
-		else{
-			if(user){
-				if(user.password == data.password)
+		}else if(!user){
+			res.redirect("/signup");
+		}else{
+			req.login(userDetails,function(err){
+		if(err){
+			console.log(err);
+		}else{
+			passport.authenticate("local",{failureRedirect:"/login"})(req,res,function(){
 				res.redirect("/");
-				else
-					res.redirect("/login")
-
-			}else
-			res.redirect("/register");
+			})
 		}
 	})
+
+		}
+	})
+	const userDetails = new user({
+		username:data.username,
+		password:data.password
+	})
+	// user.findOne({username:data.username},function(err,user){
+	// 	if(err)
+	// 		console.log(err);
+	// 	else{
+	// 		if(user){
+	// 			if(user.password == data.password)
+	// 			res.redirect("/");
+	// 			else
+	// 				res.redirect("/login")
+
+	// 		}else
+	// 		res.redirect("/signup");
+	// 	}
+	// })
+	
 
 })
 

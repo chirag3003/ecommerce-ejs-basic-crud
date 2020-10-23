@@ -11,20 +11,18 @@
 	      </li>
 
 	      <!-- log sign in -->
-
-	      <% if(!loggedIn){ %>
+	      <% if(!user){ %>
 	      <li class="nav-item">
 	        <a class="nav-link" href="/login">LOG IN</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="/register">SIGN UP</a>
 	      </li>
-	      <% } %>
-	      <% else{ %>
+	      <% }else{ %>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">My Account</a>
 	      </li>
-	      <%
+	      <% } %>
 
 
 
