@@ -19,8 +19,55 @@
 	        <a class="nav-link" href="/register">SIGN UP</a>
 	      </li>
 	      <% }else{ %>
-	      <li class="nav-item">
-	        <a class="nav-link" href="#">My Account</a>
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle"  id="accountDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          My Account
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="accountDropdown">
+	          <a class="dropdown-item" href="#">Action</a>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
+	      </li>
+	      <li class="nav-item cart">
+	        <button id="" class="btn btn-light nav-link cart-btn"><i class="fas fa-shopping-cart"></i>Cart</button>
+
+	        <div class="myCart ">
+		  		<div class="cartHeading bg-dark p-3">
+		  			<i class="fas fa-times float-right fa-2x"></i>
+		  			<p class="text-light m-0 ml-2">My Cart(3 items)</p>
+		  		</div>
+		  		<div class="totalAmt bg-light p-3 mb-1">
+		  			<p class="float-right text-muted m-0"> 12</p>
+		  			<p class="text-muted m-0">Sub Total:</p>
+		  			<p class="float-right text-muted m-0"> 0</p>
+		  			<p class="text-muted m-0">Delivery Charges:</p>
+
+		  			<hr>
+		  			<p class="float-right text-muted m-0"> 12</p>
+		  			<p class="text-muted m-0">Total Amount:</p>
+		  		</div>
+		  		<div class="cartProducts overflow-auto">
+		  			<div class="card cartprods" style="max-width: 540px;">
+					  	<div class="row no-gutters">
+					    	<div class="col-3">
+					      		<img src="/images/images (1).jpeg" class="card-img" alt="...">
+					    	</div>
+					    	<div class="col-9">
+					      		<div class="card-body">
+					        		<h5 class="card-title m-0">Maggi</h5>
+					        		<p class="card-text"><small class="text-muted">200gm</small></p>
+					        		
+					        		
+					      		</div>
+					    	</div>
+					  	</div>
+				    </div>
+		  		</div>
+		  		
+		  	</div>
+
+
 	      </li>
 	      <% } %>
 
@@ -28,16 +75,7 @@
 
 	      <!-- dropdown -->
 
-	      <!-- <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Dropdown link
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-	          <a class="dropdown-item" href="#">Action</a>
-	          <a class="dropdown-item" href="#">Another action</a>
-	          <a class="dropdown-item" href="#">Something else here</a>
-	        </div>
-	      </li> -->
+	      
 	    </ul>
 	  </div>
 	</nav>

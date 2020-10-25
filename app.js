@@ -156,43 +156,33 @@ app.post("/signup",function(req,res){
 app.post("/login",function(req,res){
 
 	let data= req.body;
-	user.findOne({username:date.username},function(err,user){
-		if(err){
-			console.log(err);
-		}else if(!user){
-			res.redirect("/signup");
-		}else{
-			req.login(userDetails,function(err){
-		if(err){
-			console.log(err);
-		}else{
-			passport.authenticate("local",{failureRedirect:"/login"})(req,res,function(){
-				res.redirect("/");
-			})
-		}
-	})
-
-		}
-	})
 	const userDetails = new user({
 		username:data.username,
-		password:data.password
+		password:data.password,
 	})
-	// user.findOne({username:data.username},function(err,user){
-	// 	if(err)
-	// 		console.log(err);
-	// 	else{
-	// 		if(user){
-	// 			if(user.password == data.password)
-	// 			res.redirect("/");
-	// 			else
-	// 				res.redirect("/login")
+	function next(err){
+		if(err){
+			console.log(err)
 
-	// 		}else
-	// 		res.redirect("/signup");
-	// 	}
-	// })
-	
+		}else{
+			res.redirect("/")
+		}
+	}
+
+	passport.authenticate('local', function(err, user, info) {
+    	if (err) { 
+    		return next(err); 
+    	}
+    	if (!user) { 
+    		return res.redirect('/login'); 
+    	}
+    	req.logIn(user, function(err) {
+    		if (err) { 
+    			return next(err); 
+    		}
+    		return next(false);
+    	});
+  })(req, res, next);
 
 })
 
