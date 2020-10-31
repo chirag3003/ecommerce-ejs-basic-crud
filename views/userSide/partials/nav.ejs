@@ -1,11 +1,12 @@
 <!-- navbar -->
   	<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-	  <a class="navbar-brand" href="#">GHARANA MART</a>
+	  
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
 	  <div class="collapse navbar-collapse px-3" id="navbarNavDropdown">
-	    <ul class="navbar-nav ml-auto">
+	  	<a class="navbar-brand" href="#">GHARANA MART</a>
+	    <ul class="navbar-nav ml-auto pr-4">
 	      <li class="nav-item active mr-4">
 	        <a class="nav-link" href="/shop">SHOP <span class="sr-only">(current)</span></a>
 	      </li>
@@ -16,8 +17,10 @@
 	        <a class="nav-link" href="/login">LOG IN</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/register">SIGN UP</a>
+	        <a class="nav-link" href="/signup">SIGN UP</a>
 	      </li>
+	  	</ul>
+	  </div>
 	      <% }else{ %>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle"  id="accountDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,8 +32,10 @@
 	          <a class="dropdown-item" href="#">Something else here</a>
 	        </div>
 	      </li>
-	      <li class="nav-item cart">
-	        <button id="" class="btn btn-light nav-link cart-btn"><i class="fas fa-shopping-cart"></i>Cart</button>
+	  	</ul>
+	  </div>
+	      <div class="position-absolute ml-auto cart">
+	        <button id="" class=" btn btn-light text-muted cart-btn "><i class="fas fa-shopping-cart"></i>Cart</button>
 
 	        <div class="myCart ">
 		  		<div class="cartHeading bg-dark p-3">
@@ -68,14 +73,14 @@
 		  	</div>
 
 
-	      </li>
+	      </div>
 	      <% } %>
 
 
 
-	      <!-- dropdown -->
+	    
 
 	      
-	    </ul>
-	  </div>
+	    
+	  
 	</nav>

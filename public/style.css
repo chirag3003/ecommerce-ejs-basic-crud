@@ -3,6 +3,7 @@
 	padding: 0;
 }
 html{
+	width:100vw;
 	overflow-x: hidden;
 }
 main{
@@ -13,7 +14,7 @@ section{
 	padding: 20px 5%;
 }
 .dropdown{
-	transiton:0.5s;
+	transition:0.5s;
 }
 
 /*HEADER*/
@@ -112,15 +113,14 @@ input:checked+p{
 .myCart{
 	background-color: #e8ffff;
 	height: 100vh;
-	position: absolute;
-	transition: 0.5s;
+	position: fixed;
+	z-index: 1000;
 	width:100vw;
-	right:-100vw;
+	right:0vw;
+	top:0;
+	display:none;
+}
 
-}
-.myCart:focus{
-	right:0;
-}
 .cartHeading p{
 	font-size: 1.2em;
 	font-weight: 500;
@@ -134,6 +134,13 @@ input:checked+p{
 .cartProducts{
 	height: 60%;
 }
+.cart{
+	top:10px;
+	right:5px;
+}
+.cart-button{
+	border-radius: 0;
+}
 .cart button i{
 	margin-right: 5px;
 }
@@ -142,8 +149,8 @@ input:checked+p{
   	.myCart{
   		top: 0;
   		right: -35vw;
-  		
-		
+  		transition: 0.4s;
+		display: block;
 		width: 35vw;
 	}
 	.cartProducts{
@@ -151,7 +158,6 @@ input:checked+p{
 	}
 	.cart:hover .myCart{
 		right: 0;
-		z-index: 1000;
 	}
 	.cartHeading i{
 		display: none;

@@ -168,26 +168,31 @@ app.post("/login",function(req,res){
 			res.redirect("/")
 		}
 	}
+	user.findOne({username:data.username},function(err,isUser){
+		if(!isUser){
+			res.redirect("/signup");
+		}else{
 
-	passport.authenticate('local', function(err, user, info) {
-    	if (err) { 
-    		return next(err); 
-    	}
-    	if (!user) { 
-    		return res.redirect('/login'); 
-    	}
-    	req.logIn(user, function(err) {
-    		if (err) { 
-    			return next(err); 
-    		}
-    		return next(false);
-    	});
-  })(req, res, next);
+		
 
+			passport.authenticate('local', function(err, user, info) {
+		    	if (err) { 
+		    		return next(err); 
+		    	}
+		    	if (!user) { 
+		    		return res.redirect('/login'); 
+		    	}
+		    	req.logIn(user, function(err) {
+		    		if (err) { 
+		    			return next(err); 
+		    		}
+		    		return next(false);
+		    	});
+		  	},{session:false})(req, res, next);
+		
+		}
+	})
 })
-
-
-
 
 
 
@@ -211,7 +216,12 @@ app.post("/admin/product",function(req,res){
 		productMrp: data.productMrp,
 		productPrice: data.productPrice,
 	})
-	product.save();
+	product.save(function(err){
+		if(err){
+			console.log(err);
+		}
+	});
+	console.log(product._id)
 
 	res.redirect("/admin/product")
 

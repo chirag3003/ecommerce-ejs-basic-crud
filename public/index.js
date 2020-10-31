@@ -1,9 +1,9 @@
 var widht = window.innerWidth;
-
+console.log(widht);
+var cart = document.querySelector(".myCart");
 	document.querySelector(".cart-btn").addEventListener("click",function(){
-		document.querySelector(".myCart").focus();
-
+		cart.style.display = "block";
 	})
 	document.querySelector(".cartHeading i").addEventListener("click",function(){
-		document.querySelector(".myCart").blur();
+		cart.style.display = "none";
 	})
