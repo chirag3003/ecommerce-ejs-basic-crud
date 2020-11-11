@@ -32,12 +32,14 @@ app.use(passport.session());
 
 mongoose.connect(`${process.env.MONGOKEY}`, {useUnifiedTopology: true,useNewUrlParser: true});
 
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("connected")
 });
+
+
+
 
 //ProductSchema and model
 const productS = new mongoose.Schema({
@@ -57,33 +59,61 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 const user = new mongoose.model("user",userSchema);
 
+
+
 const userINFO = new mongoose.Schema({
-	cart:[productS],
+	username: String,
+	cart:[{
+		product:{
+			// productName: String,
+			// productQuantity: String,
+			// productMrp: Number,
+			// productPrice: Number
+		},
+		quantity:Number}],
 	address:[String],
 
 })
+const userInfo = new mongoose.model("userInfo",userINFO);
 
+
+
+
+// passport configurations
 passport.use(user.createStrategy());
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser())
 
 
 
-let cart =[];
+
+
+
 
 
 
 // user pages
 app.get("/",function(req,res){
+	let auser=false;
+	let userDet;
 	if(req.isAuthenticated()){
 		console.log(req.user)
-	
-		Product.find(function(err,prod){
-			res.render("userSide/index" , {prod:prod,user:true})
+		auser=true
+		
+		userInfo.findOne({username:req.user.username},(err,user) =>{
+			if(err){
+				console.log(err);
+				return;
+			}
+			userDet = user;
 		})
-	}else
+		
+	}
 	Product.find(function(err,prod){
-		res.render("userSide/index" , {prod:prod,user:false})
+		if(auser)
+		res.render("userSide/index" , {prod:prod,user:auser,userDet:userDet})
+		else
+			res.render("userSide/index",{prod:prod,user:auser})
 	})
 	
 })
@@ -94,27 +124,45 @@ app.get("/",function(req,res){
 app.get("/shop",function(req,res){
 
 	let auser;
-	if(req.isAuthenticated())
+	let userDet;
+	if(req.isAuthenticated()){
 		auser = true;
-	else
+		
+		userInfo.findOne({username:req.user.username},(err,user) =>{
+			if(err){
+				console.log(err);
+				return;
+			}
+			userDet = user;
+		})
+	}else
 		auser = false;
 	Product.find(function(err,prod){
-		res.render("userSide/shop" , {prod:prod,user:auser});
+		res.render("userSide/shop" , {prod:prod,user:auser,userDet:userDet});
 	})
 })
 
 app.get("/shop/:productId",function(req,res){
 	let auser;
-	if(req.isAuthenticated())
+	let userDet;
+	if(req.isAuthenticated()){
 		auser = true;
-	else
+		
+		userInfo.findOne({username:req.user.username},(err,user) =>{
+			if(err){
+				console.log(err);
+				return;
+			}
+			userDet = user;
+		})
+	}else
 		auser = false;
 	Product.findOne({_id:req.params.productId},function(err,prod){
 		if(err){
 			console.log("err");
 		}
 		else{
-			res.render("userSide/product",{prod:prod,user:auser});
+			res.render("userSide/product",{prod:prod,user:auser,userDet:userDet});
 		}
 	})
 })
@@ -133,8 +181,40 @@ app.get('/signup',function(req,res){
 
 // user info and cart
 app.post("/addToCart",function(req,res){
-	cart.push(req.body.product);
-	console.log(cart);
+	if(!req.isAuthenticated()){
+		res.redirect("/login")
+		return;
+	}
+	Product.findOne({_id:req.body.product},function(err,prod){
+		if(err){console.log(err)}
+		else if(prod){
+			console.log(prod);
+			userInfo.findOne({username:req.user.username},function(err,user){
+				if(err){
+					console.log(err);
+				}
+				if(user){
+					// console.log("hi");
+					
+					const cart = {
+						product:prod,
+						// {
+						// 	productName:prod.productName,
+						// 	productQuantity:prod.productQuantity,
+						// 	productMrp:prod.productMrp,
+						// 	productPrice:prod.productPrice
+						// }
+						
+						quantity:0
+
+					}
+					console.log();
+					user.cart.push(cart);
+					user.save();
+				}else{console.log("user not found");}
+			})
+		}
+	})
 })
 
 app.post("/signup",function(req,res){
@@ -146,6 +226,10 @@ app.post("/signup",function(req,res){
 		}
 		else{
 			passport.authenticate("local")(req,res,function(){
+				const newUser = new userInfo({
+					username:data.username,
+				})
+				newUser.save();
 				res.redirect("/")
 			})
 		}
