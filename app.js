@@ -95,26 +95,26 @@ passport.deserializeUser(user.deserializeUser())
 // user pages
 app.get("/",function(req,res){
 	let auser=false;
-	let userDet;
-	if(req.isAuthenticated()){
-		console.log(req.user)
-		auser=true
-		
-		userInfo.findOne({username:req.user.username},(err,user) =>{
-			if(err){
-				console.log(err);
-				return;
-			}
-			userDet = user;
-		})
-		
-	}
+	
 	Product.find(function(err,prod){
-		if(auser)
-		res.render("userSide/index" , {prod:prod,user:auser,userDet:userDet})
-		else
-			res.render("userSide/index",{prod:prod,user:auser})
+		if(req.isAuthenticated()){
+			console.log(req.user)
+			auser=true;
+			
+			userInfo.findOne({username:req.user.username},(err,user) =>{
+				if(err){
+					console.log(err);
+					return;
+				}
+				res.render("userSide/index",{prod:prod,userDet:user});
+			})
+			
+		}
+		else{
+			res.render("userSide/index",{prod:prod,userDet:null})
+		}
 	})
+		
 	
 })
 
@@ -123,47 +123,43 @@ app.get("/",function(req,res){
 
 app.get("/shop",function(req,res){
 
-	let auser;
-	let userDet;
-	if(req.isAuthenticated()){
-		auser = true;
-		
-		userInfo.findOne({username:req.user.username},(err,user) =>{
-			if(err){
-				console.log(err);
-				return;
-			}
-			userDet = user;
-		})
-	}else
-		auser = false;
+	
 	Product.find(function(err,prod){
-		res.render("userSide/shop" , {prod:prod,user:auser,userDet:userDet});
+		if(req.isAuthenticated()){
+			auser = true;
+			
+			userInfo.findOne({username:req.user.username},(err,user) =>{
+				if(err){
+					console.log(err);
+					return;
+				}
+				res.render("userSide/shop",{prod:prod,userDet:user})
+
+
+			})
+
+		}else
+			
 	})
 })
 
 app.get("/shop/:productId",function(req,res){
-	let auser;
-	let userDet;
-	if(req.isAuthenticated()){
-		auser = true;
-		
-		userInfo.findOne({username:req.user.username},(err,user) =>{
-			if(err){
-				console.log(err);
-				return;
-			}
-			userDet = user;
-		})
-	}else
-		auser = false;
+	
 	Product.findOne({_id:req.params.productId},function(err,prod){
-		if(err){
-			console.log("err");
-		}
-		else{
-			res.render("userSide/product",{prod:prod,user:auser,userDet:userDet});
-		}
+		if(req.isAuthenticated()){
+			
+			
+			userInfo.findOne({username:req.user.username},(err,user) =>{
+				if(err){
+					console.log(err);
+					return;
+				}
+			})
+			res.render("userSide/shop",{prod:prod,userDet:user})
+		}else
+			auser = false;
+	
+		res.render("userSide/shop" , {prod:prod,userDet:null});
 	})
 })
 

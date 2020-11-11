@@ -12,7 +12,7 @@
 	      </li>
 
 	      <!-- log sign in -->
-	      <% if(!user){ %>
+	      <% if(!userDet){ %>
 	      <li class="nav-item">
 	        <a class="nav-link" href="/login">LOG IN</a>
 	      </li>
@@ -63,7 +63,7 @@
 					    	</div>
 					    	<div class="col-9">
 					      		<div class="card-body">
-					        		<h5 class="card-title m-0 "><%= prod.product.productName %></h5>
+					        		<p class="card-title m-0 "><%= prod.product.productName %></p>
 					        		<p class="card-text"><small class="text-muted"><%= prod.product.productQuantity %></small></p>
 									        		
 					      		</div>
